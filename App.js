@@ -1,25 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar'
+import React from 'react'
+import { View } from 'react-native'
+import AddEntry from './components/AddEntry'
 
 class App extends React.Component {
   render () {
     return (
-      <View style={styles.container}>
-        <Text>new message</Text>
-        <StatusBar style="auto" />
+      <View>
+        <AddEntry />
       </View>
-    );
+    )
   }
 }
 
 export default App
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
