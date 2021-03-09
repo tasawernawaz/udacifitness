@@ -4,6 +4,8 @@ import { getMetricMetaInfo, timeToString} from '../utils/helpers'
 import UdaciSlider from '../components/UdaciSlider'
 import UdaciSteppers from '../components/UdaciSteppers'
 import DateHeader from '../components/DateHeader'
+import {Ionicons} from '@expo/vector-icons'
+import TextButton from '../components/TextButton'
 
 
 function SubmitBtn({onPress}) {
@@ -18,22 +20,22 @@ function SubmitBtn({onPress}) {
 export default class AddEntry extends Component {
 
     state = {
-        run: 0,
-        bike: 0,
-        swim: 0,
+        run: 6,
+        bike: 4,
+        swim: 3,
         sleep: 0,
         eat: 0
     }
 
     increament = (metric) => {
-        const { max, step } = getMetricMetaInfo(metric)
-
-        this.setState((currentState) => {
-            const count = currentState[metric] + step
-            return {
-                [metric]: count > max ? max : count
-            }
-        })
+    const { max, step } = getMetricMetaInfo(metric)
+    this.setState((state) => {
+        const count = state[metric] + step
+        return {
+        ...state,
+        [metric]: count > max ? max : count,
+        }
+    })
     }
 
     decrement = (metric) => {
@@ -70,8 +72,24 @@ export default class AddEntry extends Component {
         //save to db
         //clear local notifications
     }
+
+    reset = () => {
+        const key = timeToString()
+        // update redux
+        //redirect to home
+        //update db
+    }
     render () {
         const metaInfo = getMetricMetaInfo()
+        if (true) {
+            return (
+                <View>
+                    <Ionicons size={100} name='ios-happy-outline' />
+                        <Text>You already have logged information for today.</Text>
+                    <TextButton onPress={this.reset}>Reset</TextButton>
+                </View>
+            )
+        }
         return (
             <View>
                 <DateHeader date={(new Date().toLocaleDateString())}/>
@@ -84,7 +102,7 @@ export default class AddEntry extends Component {
                             {type === 'slider'
                             ? <UdaciSlider
                             value={value}
-                            onChange={(value) => this.slide(metric, value)}
+                            onChange={(value) => this.slide(key, value)}
                             {...rest}
                             />
                             : <UdaciSteppers
